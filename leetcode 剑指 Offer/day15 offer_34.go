@@ -39,7 +39,7 @@ import (
 
 func main() {
 
-    fmt.Println( movingCount(2,3,1))
+    fmt.Println( "T")
 }
 
 // 默认代码模版
