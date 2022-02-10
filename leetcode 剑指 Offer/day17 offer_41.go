@@ -2,7 +2,7 @@
 题目描述：  剑指 Offer 41. 数据流中的中位数
 难度：  困难
 编写日期：   2022 年 2 月 7 日 晚 20：00
-重写日期：  
+重写日期：   2022 年 2 月 10 日 晚 20：00 
 */
 /*题目：  
     如何得到一个数据流中的中位数？如果从数据流中读出奇数个数值，那么中位数就是所有数值排序之后位于中间的数值。如果从数据流中读出偶数个数值，那么中位数就是所有数值排序之后中间两个数的平均值。
@@ -49,3 +49,59 @@ func main() {
 }
 
 // 默认代码模版
+type MedianFinder struct {
+    Val int
+    Next *MedianFinder
+}
+
+/** initialize your data structure here. */
+func Constructor() MedianFinder {
+    var head MedianFinder
+    return head
+}
+
+
+func (this *MedianFinder) AddNum(num int)  {
+    temp := this
+    node := new(MedianFinder)
+    node.Val = num
+    node.Next = nil
+    for temp.Next != nil  {
+        if num < temp.Next.Val {
+            node.Next = temp.Next
+            temp.Next = node
+            this.Val = this.Val + 1
+            break
+        }
+        temp = temp.Next
+    }
+    if temp.Next == nil {
+        node.Next = temp.Next
+        temp.Next = node
+        this.Val = this.Val + 1
+    }
+}
+
+
+func (this *MedianFinder) FindMedian() float64 {
+    temp := this
+    step := 0
+    for float64(step) < float64(this.Val) / 2 {
+        step ++
+        temp = temp.Next
+    }
+    // return float64(step)
+    if this.Val % 2 == 0 {
+        return (float64(temp.Val) + float64(temp.Next.Val)) / 2
+    } else {
+        return float64(temp.Val)
+    }
+}
+
+
+/**
+ * Your MedianFinder object will be instantiated and called as such:
+ * obj := Constructor();
+ * obj.AddNum(num);
+ * param_2 := obj.FindMedian();
+ */
