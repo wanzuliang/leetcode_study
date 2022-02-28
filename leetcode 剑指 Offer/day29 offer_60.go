@@ -2,7 +2,7 @@
 题目描述：  剑指 Offer 60. n个骰子的点数
 难度：  中等
 编写日期：   2022 年 2 月 27 日 晚 17：00
-重写日期：
+重写日期：   2022 年 2 月 28 日 早 10：00
 */
 /*题目：  
 
@@ -39,3 +39,21 @@ func main() {
 }
 
 // 默认代码模版
+func dicesProbability(n int) []float64 {
+    if n == 1 {
+        return []float64{1.0/6, 1.0/6, 1.0/6, 1.0/6, 1.0/6, 1.0/6}
+    }
+    res := make([]float64, n*5+1)
+    if n > 1 {
+        temp := dicesProbability(n-1)
+        for i := 0; i < len(temp); i++ {
+            temp[i] /= 6.0
+        }
+        for i := 0; i < 6; i++ {
+            for j := 0; j < len(temp); j++ {
+                res[i+j] = res[i+j] + temp[j]
+            }
+        }
+    }
+    return res
+}
