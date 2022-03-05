@@ -68,3 +68,71 @@ func maxSubArray(nums []int) int {
     }
     return max
 }
+
+//
+func maxSubArray(nums []int) int {		//分治法
+    _, max, _, _ := div(nums)
+    return max
+}
+
+
+func div(nums []int) (maxL, max, maxR, all int) { 
+    if len(nums) == 0 {
+        return
+    }
+    if len(nums) == 1 {
+        max = nums[0]
+        maxL = nums[0]
+        maxR = nums[0]
+        all = nums[0]
+        return 
+    }
+    LmaxL, Lmax, LmaxR, Lall := div(nums[:len(nums)/2])
+    RmaxL, Rmax, RmaxR, Rall := div(nums[len(nums)/2:])
+    LR_RL := LmaxR + RmaxL
+    all = Lall + Rall
+    //
+    if Lall + RmaxL >= LmaxL {  // left max
+        maxL = Lall + RmaxL
+    } else if all >= LmaxL {
+        maxL = all
+    } else {
+        maxL = LmaxL
+    }
+    if maxL >= Lmax {
+        Lmax = maxL
+    }
+    //
+    if LmaxR + Rall >= RmaxR {  // right max
+        maxR = LmaxR + Rall
+    } else if all >= RmaxR {
+        maxR = all
+    } else {
+        maxR = RmaxR
+    }
+    if maxR >= Rmax {
+        Rmax = maxR
+    }
+    // max
+    if Rmax > Lmax {
+        max = Rmax
+    } else {
+        max = Lmax
+    }
+    if LR_RL > max {
+        max = LR_RL
+    }
+    if all >= max {
+        max = all
+        maxL = all
+        maxR = all
+    }
+    return
+}
+
+
+
+
+
+
+
