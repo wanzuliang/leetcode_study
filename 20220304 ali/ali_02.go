@@ -19,45 +19,46 @@ import (
 //         fmt.Printf("%d\n", sum)
 //     }
 // }
+
+
+
 func main() {
-    for n := 3; n < 20; n++ {
-        fmt.Printf("%d    %d\n", n, sumMy(n))
-    }
+
+        fmt.Printf("%d    %d\n", 39, sumMy(39))
+    // for n := 3; n < 40; n++ {
+    //     // fmt.Printf("%d    %d\n", n, sumMy(n))
+    //     fmt.Printf("%d  %d  %d  %d\n", n, other(n), sumMy(n))
+    // }
 }
-// 3    1
-// 4    0
-// 5    5
-// 6    2
-// 7    14
-// 8    8
-// 9    3
-// 10    20
-// 11    33
-// 12    4
-// 13    39
-// 14    42
-// 15    5
-// 16    64
-// 17    68
-// 18    6
-// 19    95
 
 func sumMy(n int) int {
-    if n % 3 == 0 {
-        return n / 3
-    }
     res := 0
-    all := (n-2) * 180.0
-    eg := all / n * 1.0
-    now := eg * 1.0
+    all := float64(n-2) * 180.0
+    eg := all / float64(n)
+    now := eg
+    fmt.Printf("%f  %f  %f \n", all, eg, now)
+    same := 0
     for now > 0 {
-        if now >= 90 {
-            now -= (180.0 - eg)
-            continue
-        } else {
+        if now < 90{
+            if now == 60 {
+                same -= 2 * n / 3
+            }
             res++
-            now -= (180.0 - eg)
         }
+        now += (eg - 180.0)
     }
-    return res * n 
+    return res * n + same
+}
+
+func other(n int) (res int) {   //  https://www.nowcoder.com/discuss/854699
+    res = 0
+    if n % 2 == 0 {
+      res = n * ((n-2) / 4);
+    } else {
+      res = n * (((n-1) / 2+1) / 2)
+    }
+    if n % 3 == 0 {
+      res -= (n / 3) * 2
+    }
+    return
 }
