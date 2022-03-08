@@ -71,17 +71,14 @@ func twoSum(nums []int, target int) []int {
 
 /////
 func twoSum(nums []int, target int) []int {
-    res := make([]int, 2)
     for i := 0; i < len(nums); i++ {
         for j := i+1; j < len(nums); j++ {
             if nums[i] + nums[j] == target {
-                res[0] = i
-                res[1] = j
-                return res
+                return []int{i, j}
             }
         }
     }
-    return res
+    return nil
 }
 
 
@@ -92,13 +89,10 @@ func twoSum(nums []int, target int) []int {
         temp[i] = i
     }
     quickSort(nums, 0, len(nums)-1, temp)
-    res := make([]int, 2)
     for i, j := 0, len(nums)-1; i < j; {
         sum := nums[i] + nums[j]
         if sum == target {
-            res[0] = temp[i]
-            res[1] = temp[j]
-            return res
+            return []int{temp[i], temp[j]}
         }
         if sum < target {
             i++
@@ -106,7 +100,7 @@ func twoSum(nums []int, target int) []int {
             j--
         }
     }
-    return res
+    return nil
 }
 
 func quickSort(arr []int, left, right int, index []int) {
