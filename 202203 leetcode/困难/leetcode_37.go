@@ -36,6 +36,60 @@ func main() {
 
 
 // 默认代码模版   错误版本 
+
+func solveSudoku(board [][]byte)  {
+    sum := 0
+    block := [3][3]int{}
+    line := [9]int{}
+    column := [9]int{}
+    for i := 0; i < 9; i++ {
+        for j := 0; j < 9; j++ {
+            if board[i][j] != '.' {
+                sum++
+                move := board[i][j] - '1'
+                bit := 1 << move
+                if 0 == block[i/3][j/3] & bit {
+                    block[i/3][j/3] += bit
+                }
+                if 0 == line[i] & bit {
+                    line[i] += bit
+                }
+                if 0 == column[j] & bit {
+                    column[j] += bit
+                }
+            }
+        }
+    }
+    for sum < 81 {
+        for i := 0; i < 9; i++ {
+            for j := 0; j < 9; j++ {
+                if board[i][j] == '.' {
+                    data := block[i/3][j/3] | line[i] | column[j]
+                    bit := isOnly(data)
+                    if bit > 0 {
+                        sum++
+                        board[i][j] = byte(bit + '0')
+                        fmt.Println( i+1, j+1 )
+                        block[i/3][j/3] += 1 << (bit-1)
+                        line[i] += 1 << (bit-1)
+                        column[j] += 1 << (bit-1)
+                    }
+                }
+            }
+        }
+    }
+}
+
+func isOnly(num int) int {
+    for i := 0; i < 9; i++ {
+        if num + 1 << i == 511 {
+            return i + 1
+        }
+    }
+    return 0
+}
+
+
 func solveSudoku(board [][]byte)  {
     sum := 0
     block := [3][3]int{}
