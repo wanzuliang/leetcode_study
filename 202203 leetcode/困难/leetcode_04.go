@@ -1,6 +1,6 @@
 /*
 题目描述：  4. 寻找两个正序数组的中位数
-难度：  简单
+难度：  困难
 编写日期：   2022 年 3 月 12 日 23：00
 重写日期：   
 */
@@ -40,7 +40,7 @@ nums2.length == n
 
 */
 /*  
-    数独 逻辑推理析取合取
+
 */
 package main
 
@@ -53,7 +53,7 @@ func main() {
 }
 
 
-// 默认代码模版   错误版本 
+// 默认代码模版
 func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
     totalLength := len(nums1) + len(nums2)
     if totalLength%2 == 1 {
