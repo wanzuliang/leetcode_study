@@ -45,3 +45,32 @@ func main() {
 
 
 // 默认代码模版
+func longestPalindrome(s string) string {
+    max := 1
+    l, r := 0, 0
+    for n := 0; n < len(s); n++ {
+        for i := 1; 0 <= n-i && n+i < len(s); i++ { //奇数回文
+            if s[n-i] == s[n+i] {
+                if i*2+1 > max {
+                    max = i*2 + 1
+                    l = n - i
+                    r = n + i
+                }
+            } else {
+                break
+            }
+        }
+        for i := 1; 0 <= n-i+1 && n+i < len(s); i++ { //偶数回文
+            if s[n-i+1] == s[n+i] {
+                if 2*i > max {
+                    max = 2 * i
+                    l = n - i + 1
+                    r = n + i
+                }
+            } else {
+                break
+            }
+        }
+    }
+    return s[l:r+1]
+}
