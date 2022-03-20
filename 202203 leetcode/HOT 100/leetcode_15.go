@@ -50,32 +50,75 @@ func main() {
 
 
 // 默认代码模版
-func longestPalindrome(s string) string {
-    max := 1
-    l, r := 0, 0
-    for n := 0; n < len(s); n++ {
-        for i := 1; 0 <= n-i && n+i < len(s); i++ { //奇数回文
-            if s[n-i] == s[n+i] {
-                if i*2+1 > max {
-                    max = i*2 + 1
-                    l = n - i
-                    r = n + i
+func threeSum(nums []int) [][]int {                 //时间超过，
+    if len(nums) < 3 {
+        return [][]int{}
+    }
+    res := [][]int{}
+    sort.Ints(nums)
+    for i := 0; i < len(nums) && nums[i] <= 0; i++ {
+        for j := i+1; j < len(nums); j++ {
+            for k := len(nums)-1; k > j; k-- {
+                                    
+            flag := 0
+            if len(res) > 0 {
+                for k := len(res)-1; k >= 0 && nums[i] == res[k][0]; k-- {    //去重
+                    if nums[j] == res[k][1] {
+                        flag = 1
+                        break
+                    }
                 }
-            } else {
-                break
             }
-        }
-        for i := 1; 0 <= n-i+1 && n+i < len(s); i++ { //偶数回文
-            if s[n-i+1] == s[n+i] {
-                if 2*i > max {
-                    max = 2 * i
-                    l = n - i + 1
-                    r = n + i
+            if flag == 1 {
+                continue
+            }
+                if nums[i] + nums[j] < - nums[k]{
+                    break
                 }
-            } else {
-                break
+                if nums[i] + nums[j] == - nums[k] {
+                    res = append(res, []int{nums[i], nums[j], nums[k]})
+                    break
+                }
             }
         }
     }
-    return s[l:r+1]
+    return res
+}
+
+// 官方给的
+func threeSum(nums []int) [][]int {
+    n := len(nums)
+    sort.Ints(nums)
+    ans := make([][]int, 0)
+ 
+    // 枚举 a
+    for first := 0; first < n; first++ {
+        // 需要和上一次枚举的数不相同
+        if first > 0 && nums[first] == nums[first - 1] {
+            continue
+        }
+        // c 对应的指针初始指向数组的最右端
+        third := n - 1
+        target := -1 * nums[first]
+        // 枚举 b
+        for second := first + 1; second < n; second++ {
+            // 需要和上一次枚举的数不相同
+            if second > first + 1 && nums[second] == nums[second - 1] {
+                continue
+            }
+            // 需要保证 b 的指针在 c 的指针的左侧
+            for second < third && nums[second] + nums[third] > target {
+                third--
+            }
+            // 如果指针重合，随着 b 后续的增加
+            // 就不会有满足 a+b+c=0 并且 b<c 的 c 了，可以退出循环
+            if second == third {
+                break
+            }
+            if nums[second] + nums[third] == target {
+                ans = append(ans, []int{nums[first], nums[second], nums[third]})
+            }
+        }
+    }
+    return ans
 }
