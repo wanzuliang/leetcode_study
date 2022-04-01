@@ -48,7 +48,7 @@ import (
 )
 
 func main() {
-    fmt.Println("今天c站又卡了么")
+    fmt.Println("T")
 }
 
 // 默认代码模版
